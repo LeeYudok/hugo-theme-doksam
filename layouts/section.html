@@ -1,0 +1,21 @@
+{{ define "main" }}
+{{- $posts := .RegularPagesRecursive.ByDate.Reverse }}
+<div class="wrap read">
+  <header class="page-head">
+    <h1 class="page-title">{{ .Title }}</h1>
+    <p class="page-desc">{{ i18n "postCount" (len $posts) }}</p>
+  </header>
+  {{- with .Content }}
+  <div class="prose" style="margin-top:1.5rem">{{ . }}</div>
+  {{- end }}
+  {{- if $posts }}
+  <ul class="list">
+    {{- range $posts }}
+    {{ partial "post-row.html" (dict "page" . "variant" "full") }}
+    {{- end }}
+  </ul>
+  {{- else }}
+  <p style="margin-top:1.5rem;color:var(--muted)">{{ i18n "noPosts" }}</p>
+  {{- end }}
+</div>
+{{ end }}

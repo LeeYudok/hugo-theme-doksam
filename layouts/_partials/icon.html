@@ -1,0 +1,12 @@
+{{- /* Phosphor Icons (MIT). 인자: 아이콘 이름 또는 dict "name" "class" "size" */ -}}
+{{- $name := . -}}
+{{- $class := "" -}}
+{{- $size := "" -}}
+{{- if reflect.IsMap . -}}
+  {{- $name = .name -}}
+  {{- $class = .class | default "" -}}
+  {{- $size = .size | default "" -}}
+{{- end -}}
+{{- with resources.Get (printf "icons/%s.svg" $name) -}}
+<span class="icon {{ $class }}"{{ with $size }} style="--s:{{ . }}"{{ end }} aria-hidden="true">{{ .Content | safeHTML }}</span>
+{{- end -}}

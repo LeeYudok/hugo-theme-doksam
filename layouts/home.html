@@ -1,0 +1,41 @@
+{{ define "main" }}
+{{- /* 앞의 두 섹션을 나란히 놓는다. 글이 없는 칸은 빼고 남은 칸이 폭을 다 쓴다. */ -}}
+{{- $count := site.Params.homeCount | default 5 -}}
+{{- $ids := site.Params.homeSections | default (slice "market" "dev") -}}
+{{- $columns := slice -}}
+{{- range first 2 $ids -}}
+  {{- with site.GetPage (printf "/%s" .) -}}
+    {{- if .RegularPagesRecursive -}}{{- $columns = $columns | append . -}}{{- end -}}
+  {{- end -}}
+{{- end }}
+<div class="wrap">
+  <h1 class="sr-only">{{ site.Title }}</h1>
+  {{- with site.Params.description }}
+  <p class="intro">{{ . }}</p>
+  {{- end }}
+  {{- if not $columns }}
+  <p style="color:var(--muted)">{{ i18n "noPosts" }}</p>
+  {{- end }}
+  <div class="columns" data-count="{{ len $columns }}">
+    {{- range $columns }}
+    {{- $posts := first $count .RegularPagesRecursive.ByDate.Reverse }}
+    <section class="column" aria-labelledby="sec-{{ .Section }}">
+      <header class="column-head">
+        <h2 id="sec-{{ .Section }}">{{ .Title }}</h2>
+        <a href="{{ .RelPermalink }}">{{ i18n "more" }}{{ partial "icon.html" (dict "name" "arrow-right" "size" "0.95em") }}</a>
+      </header>
+      {{- range first 1 $posts }}
+      {{ partial "post-lead.html" . }}
+      {{- end }}
+      {{- with after 1 $posts }}
+      <ul class="rest">
+        {{- range . }}
+        {{ partial "post-row.html" (dict "page" . "variant" "compact") }}
+        {{- end }}
+      </ul>
+      {{- end }}
+    </section>
+    {{- end }}
+  </div>
+</div>
+{{ end }}

@@ -1,0 +1,23 @@
+{{- /* 글 한 줄. 인자: dict "page" "variant"(compact|full) "showSection" */ -}}
+{{- $page := .page -}}
+{{- $variant := .variant | default "compact" -}}
+<li class="row {{ $variant }}">
+  <div class="body">
+    <div class="meta">
+      <time class="date" datetime="{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ $page.Date.Format "2006-01-02" }}</time>
+      {{- if .showSection }}{{ with $page.FirstSection }}{{ if not .IsHome }}
+      <span class="badge">{{ .Title }}</span>
+      {{- end }}{{ end }}{{ end }}
+    </div>
+    <a class="title" href="{{ $page.RelPermalink }}">{{ $page.Title }}</a>
+    {{- if eq $variant "full" }}{{ with $page.Description }}
+    <p class="desc">{{ . }}</p>
+    {{- end }}{{ end }}
+  </div>
+  {{- if eq $variant "full" }}
+    {{- $cover := partial "cover.html" (dict "page" $page "width" 320) -}}
+    {{- with $cover.src }}
+  <a class="thumb" href="{{ $page.RelPermalink }}" tabindex="-1" aria-hidden="true"><img src="{{ . }}" alt="" loading="lazy" decoding="async"></a>
+    {{- end }}
+  {{- end }}
+</li>

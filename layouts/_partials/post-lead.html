@@ -1,0 +1,14 @@
+{{- /* 칸 맨 위에 크게 놓는 최신 글 */ -}}
+{{- $cover := partial "cover.html" (dict "page" . "width" 1080) -}}
+<article class="lead">
+  <a href="{{ .RelPermalink }}">
+    {{- with $cover.src }}
+    <img class="cover" src="{{ . }}" alt=""{{ with $cover.width }} width="{{ . }}"{{ end }}{{ with $cover.height }} height="{{ . }}"{{ end }} loading="eager" decoding="async">
+    {{- end }}
+    <h3>{{ .Title }}</h3>
+  </a>
+  {{- with .Description }}
+  <p class="desc">{{ . }}</p>
+  {{- end }}
+  <time class="date" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "2006-01-02" }}</time>
+</article>

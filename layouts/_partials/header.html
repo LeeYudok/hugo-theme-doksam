@@ -1,0 +1,40 @@
+<a class="skip" href="#main">{{ i18n "skip" }}</a>
+<header class="head">
+  <div class="wrap head-in">
+    <a class="brand" href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a>
+    <nav class="nav" aria-label="Primary">
+      {{- $current := . }}
+      {{- range site.Menus.main }}
+      <a href="{{ .URL | relLangURL }}"{{ if or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }} aria-current="page"{{ end }}>{{ .Name }}</a>
+      {{- end }}
+    </nav>
+    <div class="tools">
+      {{- with site.GetPage "/search" }}
+      <a href="{{ .RelPermalink }}" title="{{ i18n "search" }}">{{ partial "icon.html" "magnifying-glass" }}<span class="sr-only">{{ i18n "search" }}</span></a>
+      {{- end }}
+      <button type="button" data-theme-toggle title="{{ i18n "theme" }}">
+        {{ partial "icon.html" (dict "name" "moon" "class" "when-light") }}
+        {{ partial "icon.html" (dict "name" "sun" "class" "when-dark") }}
+        <span class="sr-only">{{ i18n "theme" }}</span>
+      </button>
+      {{- /* 다른 언어판이 있으면 그 글로, 없으면 그 언어의 첫 화면으로 보낸다. */}}
+      {{- $page := . }}
+      {{- range site.Home.Translations }}
+        {{- $lang := .Lang }}
+        {{- $href := .RelPermalink }}
+        {{- range $page.Translations }}{{ if eq .Lang $lang }}{{ $href = .RelPermalink }}{{ end }}{{ end }}
+      <a class="lang" href="{{ $href }}" lang="{{ $lang }}" hreflang="{{ $lang }}">{{ $lang | upper }}</a>
+      {{- end }}
+    </div>
+  </div>
+</header>
+<script>
+  document.querySelectorAll("[data-theme-toggle]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      var root = document.documentElement;
+      var next = root.dataset.theme === "dark" ? "light" : "dark";
+      root.dataset.theme = next;
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+  });
+</script>

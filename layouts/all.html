@@ -1,0 +1,16 @@
+{{ define "main" }}
+{{- /* 전체 글. content/posts/_index.md 에 `layout: all` 을 적어 쓴다. */ -}}
+{{- $posts := where site.RegularPages "Type" "ne" "page" }}
+{{- $posts = $posts.ByDate.Reverse }}
+<div class="wrap read">
+  <header class="page-head">
+    <h1 class="page-title">{{ .Title }}</h1>
+    <p class="page-desc">{{ i18n "postCount" (len $posts) }}</p>
+  </header>
+  <ul class="list">
+    {{- range $posts }}
+    {{ partial "post-row.html" (dict "page" . "variant" "full" "showSection" true) }}
+    {{- end }}
+  </ul>
+</div>
+{{ end }}

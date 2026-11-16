@@ -1,0 +1,28 @@
+{{ define "head" }}
+<link rel="stylesheet" href="{{ "pagefind/pagefind-ui.css" | relURL }}">
+{{ end }}
+{{ define "main" }}
+{{- /* 검색. content/search/_index.md 에 `layout: search` 를 적어 쓴다. 색인은 `pagefind --site public` 이 만든다. */ -}}
+<div class="wrap read">
+  <header class="page-head">
+    <h1 class="page-title">{{ .Title }}</h1>
+  </header>
+  <div id="search" style="margin-top:1.75rem"></div>
+  <p id="search-hint" hidden style="color:var(--muted)">{{ i18n "searchHint" }}</p>
+</div>
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.src = "{{ "pagefind/pagefind-ui.js" | relURL }}";
+    script.onload = function () {
+      var ui = new PagefindUI({ element: "#search", showImages: false, showSubResults: true });
+      var q = new URLSearchParams(location.search).get("q");
+      if (q) ui.triggerSearch(q);
+    };
+    script.onerror = function () {
+      document.getElementById("search-hint").hidden = false;
+    };
+    document.head.appendChild(script);
+  })();
+</script>
+{{ end }}

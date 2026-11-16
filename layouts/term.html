@@ -1,0 +1,14 @@
+{{ define "main" }}
+{{- $posts := .Pages.ByDate.Reverse }}
+<div class="wrap read">
+  <header class="page-head">
+    <h1 class="page-title">#{{ .Data.Term }}</h1>
+    <p class="page-desc">{{ i18n "postCount" (len $posts) }}</p>
+  </header>
+  <ul class="list">
+    {{- range $posts }}
+    {{ partial "post-row.html" (dict "page" . "variant" "full" "showSection" true) }}
+    {{- end }}
+  </ul>
+</div>
+{{ end }}

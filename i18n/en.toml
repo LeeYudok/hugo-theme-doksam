@@ -1,0 +1,27 @@
+[more]
+other = "View all"
+[noPosts]
+other = "No posts yet."
+[prev]
+other = "Previous"
+[next]
+other = "Next"
+[updated]
+other = "Updated"
+[tags]
+other = "Tags"
+[search]
+other = "Search"
+[searchHint]
+other = "Search works after you build the site and run pagefind."
+[notFound]
+other = "Page not found"
+[goHome]
+other = "Back to home"
+[skip]
+other = "Skip to content"
+[theme]
+other = "Toggle theme"
+[postCount]
+one = "{{ . }} post"
+other = "{{ . }} posts"

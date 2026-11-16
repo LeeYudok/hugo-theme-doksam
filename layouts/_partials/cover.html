@@ -1,0 +1,21 @@
+{{- /* 글의 cover 를 찾아 dict "src" "width" "height" 로 돌려준다. 인자: dict "page" "width"
+     찾는 순서: 글 묶음(page bundle)의 파일 → assets/ → 그대로 쓰는 주소 */ -}}
+{{- $page := .page -}}
+{{- $width := .width | default 960 -}}
+{{- $result := dict -}}
+{{- with $page.Params.cover -}}
+  {{- $res := $page.Resources.Get . -}}
+  {{- if not $res -}}{{- $res = resources.Get . -}}{{- end -}}
+  {{- if $res -}}
+    {{- if and (eq $res.ResourceType "image") (ne $res.MediaType.SubType "svg") -}}
+      {{- $img := $res -}}
+      {{- if gt $res.Width $width -}}{{- $img = $res.Process (printf "resize %dx" $width) -}}{{- end -}}
+      {{- $result = dict "src" $img.RelPermalink "width" $img.Width "height" $img.Height -}}
+    {{- else -}}
+      {{- $result = dict "src" $res.RelPermalink -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $result = dict "src" (. | relURL) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $result -}}

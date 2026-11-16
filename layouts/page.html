@@ -1,0 +1,49 @@
+{{ define "main" }}
+{{- $section := .FirstSection }}
+<div class="wrap read" data-pagefind-body>
+  <header class="post-head">
+    {{- if and $section (not $section.IsHome) }}
+    <a class="badge" href="{{ $section.RelPermalink }}">{{ $section.Title }}</a>
+    {{- end }}
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{- if not .Date.IsZero }}
+    <p class="meta">
+      <time class="date" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "2006-01-02" }}</time>
+      {{- if gt (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02") }}
+      <span class="date">· {{ i18n "updated" }} {{ .Lastmod.Format "2006-01-02" }}</span>
+      {{- end }}
+    </p>
+    {{- end }}
+  </header>
+
+  <article class="prose">
+    {{ .Content }}
+  </article>
+
+  {{- with .GetTerms "tags" }}
+  <div class="post-tags" data-pagefind-ignore>
+    <ul class="tags">
+      {{- range . }}
+      <li><a href="{{ .RelPermalink }}">#{{ .Data.Term }}</a></li>
+      {{- end }}
+    </ul>
+  </div>
+  {{- end }}
+
+  {{- /* 이전·다음은 같은 섹션 안에서만 잇는다. */}}
+  {{- $older := .PrevInSection }}
+  {{- $newer := .NextInSection }}
+  {{- if or $older $newer }}
+  <nav class="pager" data-pagefind-ignore>
+    {{- with $older }}
+    <a href="{{ .RelPermalink }}"><span>{{ partial "icon.html" (dict "name" "arrow-left" "size" "0.95em") }}{{ i18n "prev" }}</span><strong>{{ .Title }}</strong></a>
+    {{- else }}
+    <span></span>
+    {{- end }}
+    {{- with $newer }}
+    <a class="next" href="{{ .RelPermalink }}"><span>{{ i18n "next" }}{{ partial "icon.html" (dict "name" "arrow-right" "size" "0.95em") }}</span><strong>{{ .Title }}</strong></a>
+    {{- end }}
+  </nav>
+  {{- end }}
+</div>
+{{ end }}

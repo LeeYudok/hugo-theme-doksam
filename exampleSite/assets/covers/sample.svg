@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-label="Sample cover">
+  <rect width="960" height="540" fill="#f3f1ec"/>
+  <rect x="60" y="60" width="400" height="180" rx="14" fill="#fff" stroke="#e3e0d8"/>
+  <rect x="500" y="60" width="400" height="180" rx="14" fill="#fff" stroke="#e3e0d8"/>
+  <rect x="60" y="280" width="840" height="200" rx="14" fill="#fff" stroke="#e3e0d8"/>
+  <text x="90" y="120" font-family="sans-serif" font-size="26" fill="#6d6a63">Index A</text>
+  <text x="90" y="190" font-family="sans-serif" font-size="56" font-weight="700" fill="#1c1b19">1,234.56</text>
+  <text x="530" y="120" font-family="sans-serif" font-size="26" fill="#6d6a63">Index B</text>
+  <text x="530" y="190" font-family="sans-serif" font-size="56" font-weight="700" fill="#1c1b19">789.01</text>
+  <polyline points="90,440 200,400 310,420 420,360 530,380 640,330 750,350 870,310" fill="none" stroke="#0d6b5b" stroke-width="5"/>
+</svg>

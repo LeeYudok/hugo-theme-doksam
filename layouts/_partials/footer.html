@@ -1,0 +1,13 @@
+<footer class="foot">
+  <div class="wrap foot-in">
+    <span>&copy; {{ now.Year }} {{ site.Params.author | default site.Title }}</span>
+    <ul>
+      {{- range site.Params.socials }}
+      <li><a href="{{ .url }}" rel="me noopener" target="_blank">{{ with .icon }}{{ partial "icon.html" . }}{{ end }}{{ .label }}</a></li>
+      {{- end }}
+      {{- with site.Home.OutputFormats.Get "rss" }}
+      <li><a href="{{ .RelPermalink }}">{{ partial "icon.html" "rss" }}RSS</a></li>
+      {{- end }}
+    </ul>
+  </div>
+</footer>

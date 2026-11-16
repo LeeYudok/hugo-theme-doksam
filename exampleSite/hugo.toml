@@ -1,0 +1,66 @@
+baseURL = "https://example.org/"
+title = "Doksam"
+theme = "hugo-theme-doksam"
+defaultContentLanguage = "ko"
+enableRobotsTXT = true
+
+[taxonomies]
+  tag = "tags"
+
+[markup.highlight]
+  noClasses = false
+
+[params]
+  author = "글쓴이"
+  homeSections = ["market", "dev"]
+  homeCount = 5
+  pretendardCDN = true
+
+  [[params.socials]]
+    label = "GitHub"
+    url = "https://github.com/LeeYudok/hugo-theme-doksam"
+    icon = "github-logo"
+
+[languages.ko]
+  contentDir = "content/ko"
+  weight = 1
+  [languages.ko.params]
+    description = "증시와 개발 글을 나란히 놓는 블로그 테마 예제입니다."
+  [[languages.ko.menus.main]]
+    name = "증시"
+    pageRef = "/market"
+    weight = 1
+  [[languages.ko.menus.main]]
+    name = "개발"
+    pageRef = "/dev"
+    weight = 2
+  [[languages.ko.menus.main]]
+    name = "전체 글"
+    pageRef = "/posts"
+    weight = 3
+  [[languages.ko.menus.main]]
+    name = "태그"
+    pageRef = "/tags"
+    weight = 4
+
+[languages.en]
+  contentDir = "content/en"
+  weight = 2
+  [languages.en.params]
+    description = "An example site for a theme that puts two sections side by side."
+  [[languages.en.menus.main]]
+    name = "Markets"
+    pageRef = "/market"
+    weight = 1
+  [[languages.en.menus.main]]
+    name = "Dev"
+    pageRef = "/dev"
+    weight = 2
+  [[languages.en.menus.main]]
+    name = "All posts"
+    pageRef = "/posts"
+    weight = 3
+  [[languages.en.menus.main]]
+    name = "Tags"
+    pageRef = "/tags"
+    weight = 4
