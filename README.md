@@ -16,6 +16,7 @@ A two-column Hugo blog theme. The home page puts two sections side by side — o
 - 밝게·어둡게 전환. 처음에는 시스템 설정을 따르고 고른 값은 브라우저에 남는다.
 - 코드 색은 밝은 화면(github)과 어두운 화면(github-dark)을 따로 넣었다.
 - 아이콘은 [Phosphor Icons](https://github.com/phosphor-icons/core)(MIT)의 SVG 다.
+- 글꼴은 [Pretendard](https://github.com/orioncactus/pretendard)(OFL-1.1) 가변 글꼴을 `static/fonts/pretendard/` 에 넣었다. 외부 CDN 을 쓰지 않아 폐쇄망에서도 같은 글꼴이 나온다.
 
 Hugo 0.146.0 이상이 필요하다(새 `layouts/` 구조를 쓴다). 2026-11-17 에 Hugo 0.170.0 으로 예제 사이트를 빌드해 확인했다.
 
@@ -118,7 +119,7 @@ cover: covers/2026-11-16.png
 | `homeCount` | `5` | 첫 화면 한 칸의 글 수 |
 | `socials` | 없음 | 꼬리말 링크. `icon` 은 `github-logo`, `rss`, `arrow-up-right` |
 | `favicon` | 없음 | 파비콘 경로 |
-| `pretendardCDN` | `true` | Pretendard 글꼴을 jsDelivr 에서 받는다. `false` 면 시스템 글꼴을 쓴다 |
+| `pretendard` | `true` | 테마에 든 Pretendard 글꼴을 쓴다. `false` 면 시스템 글꼴을 쓴다 |
 
 메뉴는 Hugo 의 `menus.main` 을 그대로 그린다. 언어별 메뉴는 `languages.<언어>.menus.main` 에 적는다.
 
@@ -176,10 +177,18 @@ hugo && npx pagefind --site public
 }
 ```
 
+## 테마 고치기
+
+예제 사이트를 빌드하고, 결과가 다른 호스트의 스크립트·스타일·글꼴·이미지를 불러오지 않는지 검사한다. PR 과 `main` 푸시마다 GitHub Actions 가 같은 두 단계를 돌린다.
+
+```bash
+hugo --source exampleSite --themesDir ../.. --theme hugo-theme-doksam
+node scripts/check-external.mjs exampleSite/public https://example.org
+```
+
 ## 한계
 
 - 목록 화면에 쪽 나눔이 없다.
-- 폐쇄망에서는 `pretendardCDN = false` 로 두고 글꼴을 직접 넣어야 한다.
 - 화면 글귀는 한국어와 영어만 들어 있다.
 
 ## 라이선스

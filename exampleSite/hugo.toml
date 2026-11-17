@@ -14,7 +14,7 @@ enableRobotsTXT = true
   author = "글쓴이"
   homeSections = ["market", "dev"]
   homeCount = 5
-  pretendardCDN = true
+  pretendard = true
 
   [[params.socials]]
     label = "GitHub"
