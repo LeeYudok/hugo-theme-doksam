@@ -1,6 +1,7 @@
 {{ define "main" }}
 {{- $section := .FirstSection }}
 {{- $showToc := and (ne .Params.toc false) (ne .Params.showTableOfContents false) (strings.Contains .TableOfContents "<li") }}
+<div class="read-progress" aria-hidden="true"><span></span></div>
 <div class="wrap read{{ if $showToc }} has-toc{{ end }}" data-pagefind-body>
   <header class="post-head">
     {{- if and $section (not $section.IsHome) }}
@@ -58,4 +59,57 @@
     </div>
   </div>
 </div>
+<script>
+  // 읽기 진행선과 목차의 현재 위치 표시. 스크롤마다 한 프레임에 한 번만 계산한다.
+  (function () {
+    var bar = document.querySelector(".read-progress span");
+    var toc = document.querySelector(".toc");
+    var items = [];
+    if (toc) {
+      toc.querySelectorAll("nav a[href^='#']").forEach(function (a) {
+        var id = a.getAttribute("href").slice(1);
+        try {
+          id = decodeURIComponent(id);
+        } catch (e) {}
+        var h = document.getElementById(id);
+        if (h) items.push({ a: a, h: h });
+      });
+    }
+    var root = document.documentElement;
+    var active = null;
+    var queued = false;
+    function update() {
+      queued = false;
+      var max = root.scrollHeight - window.innerHeight;
+      if (bar) bar.style.transform = "scaleX(" + (max > 0 ? Math.min(1, window.scrollY / max) : 0) + ")";
+      if (!items.length) return;
+      var line = (parseFloat(getComputedStyle(root).scrollPaddingTop) || 80) + 8;
+      var current = null;
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].h.getBoundingClientRect().top <= line) current = items[i].a;
+      }
+      if (max > 0 && window.scrollY >= max - 2) current = items[items.length - 1].a;
+      if (current === active) return;
+      if (active) active.removeAttribute("aria-current");
+      active = current;
+      if (!active) return;
+      active.setAttribute("aria-current", "location");
+      // 목차가 따로 스크롤될 때만 현재 항목을 그 안에서 보이게 한다. 페이지는 움직이지 않는다.
+      if (toc.scrollHeight > toc.clientHeight) {
+        var t = toc.getBoundingClientRect();
+        var r = active.getBoundingClientRect();
+        if (r.top < t.top) toc.scrollTop -= t.top - r.top + 8;
+        else if (r.bottom > t.bottom) toc.scrollTop += r.bottom - t.bottom + 8;
+      }
+    }
+    function onScroll() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(update);
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
+  })();
+</script>
 {{ end }}

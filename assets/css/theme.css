@@ -693,6 +693,21 @@ main {
 .post-head .meta {
   margin-top: 0.75rem;
 }
+/* 읽기 진행선. 고정 머리말(z-index 5) 위, 건너뛰기 링크(10) 아래에 둔다. */
+.read-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 6;
+  height: 3px;
+  pointer-events: none;
+}
+.read-progress span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+}
 .toc {
   margin-bottom: 2rem;
   padding: 0.9rem 1.1rem;
@@ -723,6 +738,10 @@ main {
 }
 .toc nav a:hover {
   color: var(--accent);
+}
+.toc nav a[aria-current="location"] {
+  color: var(--accent);
+  font-weight: 650;
 }
 @media (min-width: 1024px) {
   .wrap.read.has-toc {
