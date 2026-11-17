@@ -4,6 +4,10 @@ Hugo 블로그 테마다. 첫 화면에 두 섹션을 나란히 놓는다. 대�
 
 A two-column Hugo blog theme. The home page puts two sections side by side — one led by a cover image, one a plain post list. Korean-first typography (Pretendard), light and dark, multilingual. No JavaScript framework and no CSS build step.
 
+![Doksam 테마 첫 화면](https://raw.githubusercontent.com/LeeYudok/hugo-theme-doksam/main/images/screenshot.png)
+
+데모 / Demo: <https://leeyudok.github.io/hugo-theme-doksam/> · [English](#english)
+
 같은 화면을 Astro 로 만든 테마는 [astro-theme-doksam](https://github.com/LeeYudok/astro-theme-doksam) 이다.
 
 ## 들어 있는 것
@@ -191,6 +195,62 @@ node scripts/check-external.mjs exampleSite/public https://example.org
 
 - 목록 화면에 쪽 나눔이 없다.
 - 화면 글귀는 한국어와 영어만 들어 있다.
+
+## English
+
+Doksam is a Hugo blog theme whose home page puts two sections side by side: one led by a cover image, one a plain list of posts. It is built for sites that publish two kinds of writing, such as a daily market recap next to development notes.
+
+### Features
+
+- Two-column home page. Each column shows its newest post large and the rest as date and title. A column with no posts is dropped.
+- Section lists, all posts, tags, single post, search and 404 pages.
+- Table of contents beside the post on wide screens, above it on narrow ones. The current section is highlighted and a thin bar shows reading progress.
+- Sticky header. Heading links stop below it.
+- Light and dark. Follows the system setting first and remembers the reader's choice.
+- Hugo multilingual. The language switch goes to the translated post when there is one.
+- Self-hosted Pretendard variable font (OFL-1.1) and Phosphor icons (MIT). No external CDN, no JavaScript framework, no CSS framework.
+- Search by [Pagefind](https://pagefind.app/).
+
+### Install
+
+```bash
+git submodule add https://github.com/LeeYudok/hugo-theme-doksam themes/hugo-theme-doksam
+```
+
+```toml
+theme = "hugo-theme-doksam"
+
+[taxonomies]
+  tag = "tags"
+
+[markup.highlight]
+  noClasses = false   # use the theme's code colors
+
+[params]
+  author = "Your name"
+  description = "One-line intro on the home page"
+  homeSections = ["market", "dev"]   # the two sections shown side by side
+  homeCount = 5                      # posts per column
+```
+
+Requires Hugo 0.146.0 or later. The extended edition is not needed. See [`exampleSite/`](exampleSite) for a complete configuration with menus and two languages.
+
+### Options
+
+| Param | Default | Meaning |
+|---|---|---|
+| `homeSections` | `["market", "dev"]` | The two sections on the home page |
+| `homeCount` | `5` | Posts per column |
+| `pretendard` | `true` | Use the bundled Pretendard font. `false` falls back to system fonts |
+| `socials` | none | Footer links: `label`, `url`, `icon` (`github-logo`, `rss`, `arrow-up-right`) |
+
+Set `toc: false` in a post's front matter to hide its table of contents. Colors, corner radii and the header height are CSS variables in `assets/css/theme.css`; override them in `assets/css/custom.css`.
+
+### Search
+
+```bash
+hugo && npx pagefind --site public
+```
 
 ## 라이선스
 

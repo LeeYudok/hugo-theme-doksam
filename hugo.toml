@@ -1,0 +1,5 @@
+# 이 테마가 지원하는 Hugo 버전. themes.gohugo.io 와 Hugo Modules 가 읽는다.
+[module]
+  [module.hugoVersion]
+    extended = false
+    min = "0.146.0"

@@ -3,6 +3,7 @@ license = "MIT"
 licenselink = "https://github.com/LeeYudok/hugo-theme-doksam/blob/main/LICENSE"
 description = "Two-column blog theme: a cover-led section next to a plain post list. Korean-first typography, light and dark, multilingual."
 homepage = "https://github.com/LeeYudok/hugo-theme-doksam"
+demosite = "https://leeyudok.github.io/hugo-theme-doksam/"
 tags = ["blog", "minimal", "dark", "light", "multilingual", "responsive"]
 features = ["dark mode", "multilingual", "pagefind search", "cover images"]
 min_version = "0.146.0"
