@@ -13,10 +13,17 @@
   --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas,
     "Liberation Mono", monospace;
 
+  /* 화면 위에 붙는 머리말의 높이. 제목 링크로 갈 때 이만큼 비운다. */
+  --head-h: 4rem;
+
   --w-wide: 68rem;
   --w-read: 44rem;
   --gutter: 1.25rem;
+  /* 모서리: 표면(이미지·코드블록·상자) / 컨트롤(버튼·작은 이미지) / 글줄 안 조각 / 알약 */
   --radius: 10px;
+  --radius-control: 8px;
+  --radius-inline: 5px;
+  --radius-pill: 999px;
 
   color-scheme: light;
 }
@@ -33,6 +40,13 @@
   color-scheme: dark;
 }
 
+/* 좁은 화면에서는 메뉴가 둘째 줄로 내려가 머리말이 높아진다. */
+@media (max-width: 720px) {
+  :root {
+    --head-h: 6rem;
+  }
+}
+
 *,
 *::before,
 *::after {
@@ -40,6 +54,7 @@
 }
 
 html {
+  scroll-padding-top: calc(var(--head-h) + 1rem);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   overflow-y: scroll;
@@ -100,7 +115,7 @@ button {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: var(--radius-inline);
 }
 
 ::selection {
@@ -307,7 +322,7 @@ main {
 
 .prose :not(pre) > code {
   padding: 0.15em 0.4em;
-  border-radius: 5px;
+  border-radius: var(--radius-inline);
   background: var(--surface);
   font-family: var(--font-mono);
   font-size: 0.875em;
@@ -364,12 +379,17 @@ main {
   padding: 0.5rem 0.9rem;
   background: var(--text);
   color: var(--bg);
-  border-radius: 6px;
+  border-radius: var(--radius-control);
 }
 .skip:focus {
   top: 0.75rem;
 }
+/* 스크롤해도 화면 위에 붙는다. 건너뛰기 링크(z-index 10)보다는 아래다. */
 .head {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--bg);
   border-bottom: 1px solid var(--line);
 }
 .head-in {
@@ -421,7 +441,7 @@ main {
   justify-content: center;
   min-width: 2.25rem;
   height: 2.25rem;
-  border-radius: 8px;
+  border-radius: var(--radius-control);
   color: var(--muted);
 }
 .tools > *:hover {
@@ -580,7 +600,7 @@ main {
 .badge {
   display: inline-block;
   padding: 0.05rem 0.5rem;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--accent-soft);
   color: var(--accent);
   font-size: 0.75rem;
@@ -618,7 +638,7 @@ main {
   aspect-ratio: 16 / 9;
   object-fit: cover;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: var(--radius-control);
 }
 .list > .row:first-child {
   border-top: 0;
@@ -644,7 +664,7 @@ main {
   gap: 0.45rem;
   padding: 0.2rem 0.75rem;
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   font-size: 0.875rem;
   color: var(--muted);
 }
@@ -725,7 +745,7 @@ main {
   --pagefind-ui-border: var(--line);
   --pagefind-ui-tag: var(--surface);
   --pagefind-ui-border-width: 1px;
-  --pagefind-ui-border-radius: 10px;
+  --pagefind-ui-border-radius: var(--radius);
   --pagefind-ui-font: var(--font-sans);
 }
 
