@@ -44,9 +44,9 @@
 {{- end }}
 {{- end }}
 
-{{- if site.Params.pretendardCDN | default true }}
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+{{- /* Pretendard 는 테마의 static/fonts/pretendard 에 들어 있다. 외부 CDN 을 쓰지 않는다. */}}
+{{- if ne site.Params.pretendard false }}
+<link rel="stylesheet" href="{{ "fonts/pretendard/pretendardvariable-dynamic-subset.css" | relURL }}">
 {{- end }}
 {{- $css := slice (resources.Get "css/theme.css") (resources.Get "css/syntax.css") | resources.Concat "css/doksam.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
