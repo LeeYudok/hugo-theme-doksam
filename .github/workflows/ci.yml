@@ -1,0 +1,23 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  example:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.170.0"
+          extended: true
+      - name: Build example site
+        run: hugo --source exampleSite --themesDir ../.. --theme "${GITHUB_REPOSITORY#*/}"
+      - name: No external resources
+        run: node scripts/check-external.mjs exampleSite/public https://example.org

@@ -177,6 +177,15 @@ hugo && npx pagefind --site public
 }
 ```
 
+## 테마 고치기
+
+예제 사이트를 빌드하고, 결과가 다른 호스트의 스크립트·스타일·글꼴·이미지를 불러오지 않는지 검사한다. PR 과 `main` 푸시마다 GitHub Actions 가 같은 두 단계를 돌린다.
+
+```bash
+hugo --source exampleSite --themesDir ../.. --theme hugo-theme-doksam
+node scripts/check-external.mjs exampleSite/public https://example.org
+```
+
 ## 한계
 
 - 목록 화면에 쪽 나눔이 없다.
