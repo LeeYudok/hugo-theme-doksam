@@ -22,5 +22,7 @@ other = "첫 화면으로"
 other = "본문으로 건너뛰기"
 [theme]
 other = "밝게/어둡게"
+[toc]
+other = "목차"
 [postCount]
 other = "글 {{ . }}개"

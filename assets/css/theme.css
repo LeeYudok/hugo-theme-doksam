@@ -693,6 +693,65 @@ main {
 .post-head .meta {
   margin-top: 0.75rem;
 }
+.toc {
+  margin-bottom: 2rem;
+  padding: 0.9rem 1.1rem;
+  border-left: 2px solid var(--line);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+.toc-title {
+  display: block;
+  margin-bottom: 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.toc nav ul {
+  display: grid;
+  gap: 0.35rem;
+}
+.toc nav ul ul {
+  margin-top: 0.3rem;
+  padding-left: 0.9rem;
+}
+.toc nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.toc nav a:hover {
+  color: var(--accent);
+}
+@media (min-width: 1024px) {
+  .wrap.read.has-toc {
+    max-width: var(--w-wide);
+  }
+  .has-toc .post-head {
+    max-width: var(--w-read);
+  }
+  .has-toc .post-body {
+    display: grid;
+    grid-template-columns: minmax(0, var(--w-read)) minmax(13rem, 16rem);
+    justify-content: space-between;
+    align-items: start;
+    gap: 3rem;
+  }
+  .has-toc .post-main {
+    order: 1;
+    min-width: 0;
+  }
+  .has-toc .toc {
+    order: 2;
+    position: sticky;
+    top: calc(var(--head-h) + 1.5rem);
+    max-height: calc(100svh - var(--head-h) - 3rem);
+    overflow-y: auto;
+    margin-bottom: 0;
+    padding: 0.25rem 0 0.25rem 1rem;
+  }
+}
 .post-tags {
   margin-top: 3rem;
   padding-top: 1.5rem;

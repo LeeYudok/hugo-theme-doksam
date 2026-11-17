@@ -22,6 +22,8 @@ other = "Back to home"
 other = "Skip to content"
 [theme]
 other = "Toggle theme"
+[toc]
+other = "Contents"
 [postCount]
 one = "{{ . }} post"
 other = "{{ . }} posts"

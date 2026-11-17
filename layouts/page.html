@@ -1,6 +1,7 @@
 {{ define "main" }}
 {{- $section := .FirstSection }}
-<div class="wrap read" data-pagefind-body>
+{{- $showToc := and (ne .Params.toc false) (ne .Params.showTableOfContents false) (strings.Contains .TableOfContents "<li") }}
+<div class="wrap read{{ if $showToc }} has-toc{{ end }}" data-pagefind-body>
   <header class="post-head">
     {{- if and $section (not $section.IsHome) }}
     <a class="badge" href="{{ $section.RelPermalink }}">{{ $section.Title }}</a>
@@ -16,34 +17,45 @@
     {{- end }}
   </header>
 
-  <article class="prose">
-    {{ .Content }}
-  </article>
+  <div class="post-body">
+    {{- if $showToc }}
+    <aside class="toc" aria-labelledby="toc-title" data-pagefind-ignore>
+      <strong class="toc-title" id="toc-title">{{ i18n "toc" }}</strong>
+      {{ .TableOfContents }}
+    </aside>
+    {{- end }}
 
-  {{- with .GetTerms "tags" }}
-  <div class="post-tags" data-pagefind-ignore>
-    <ul class="tags">
-      {{- range . }}
-      <li><a href="{{ .RelPermalink }}">#{{ .Data.Term }}</a></li>
+    <div class="post-main">
+      <article class="prose">
+        {{ .Content }}
+      </article>
+
+      {{- with .GetTerms "tags" }}
+      <div class="post-tags" data-pagefind-ignore>
+        <ul class="tags">
+          {{- range . }}
+          <li><a href="{{ .RelPermalink }}">#{{ .Data.Term }}</a></li>
+          {{- end }}
+        </ul>
+      </div>
       {{- end }}
-    </ul>
-  </div>
-  {{- end }}
 
-  {{- /* 이전·다음은 같은 섹션 안에서만 잇는다. */}}
-  {{- $older := .PrevInSection }}
-  {{- $newer := .NextInSection }}
-  {{- if or $older $newer }}
-  <nav class="pager" data-pagefind-ignore>
-    {{- with $older }}
-    <a href="{{ .RelPermalink }}"><span>{{ partial "icon.html" (dict "name" "arrow-left" "size" "0.95em") }}{{ i18n "prev" }}</span><strong>{{ .Title }}</strong></a>
-    {{- else }}
-    <span></span>
-    {{- end }}
-    {{- with $newer }}
-    <a class="next" href="{{ .RelPermalink }}"><span>{{ i18n "next" }}{{ partial "icon.html" (dict "name" "arrow-right" "size" "0.95em") }}</span><strong>{{ .Title }}</strong></a>
-    {{- end }}
-  </nav>
-  {{- end }}
+      {{- /* 이전·다음은 같은 섹션 안에서만 잇는다. */}}
+      {{- $older := .PrevInSection }}
+      {{- $newer := .NextInSection }}
+      {{- if or $older $newer }}
+      <nav class="pager" data-pagefind-ignore>
+        {{- with $older }}
+        <a href="{{ .RelPermalink }}"><span>{{ partial "icon.html" (dict "name" "arrow-left" "size" "0.95em") }}{{ i18n "prev" }}</span><strong>{{ .Title }}</strong></a>
+        {{- else }}
+        <span></span>
+        {{- end }}
+        {{- with $newer }}
+        <a class="next" href="{{ .RelPermalink }}"><span>{{ i18n "next" }}{{ partial "icon.html" (dict "name" "arrow-right" "size" "0.95em") }}</span><strong>{{ .Title }}</strong></a>
+        {{- end }}
+      </nav>
+      {{- end }}
+    </div>
+  </div>
 </div>
 {{ end }}
